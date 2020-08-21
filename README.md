@@ -1,4 +1,25 @@
 # Home Automation
+
+## General infrastructure
+- React or Angular frontend if we want to stay in the HTTP region
+    - Later we can swap to an App (only for iPhone master race)
+- Koa or Express backend
+    - Mocking the missing hardware and create a working app beforehand
+- Divide functionality into microservices
+- Are we using a database?
+    - Could use Sequelize and SQL
+- Accessible only via home network (Think about your education!)
+- Hardware has to have an open API interface
+- Use an open source framework like [Home Assistant](https://www.home-assistant.io/getting-started/)?
+
+## Open API hardware
+- [LIFX](https://eu.lifx.com/)
+    - [API](https://api.developer.lifx.com/docs/introduction)
+
+## Useful links
+- [Home Automation Reddit](https://www.reddit.com/r/homeautomation/)
+- [27 Home Automation devices](https://medium.com/@mr_moodnode/27-smart-devices-that-have-open-api-11698813b474)
+
  
 ## API
 
