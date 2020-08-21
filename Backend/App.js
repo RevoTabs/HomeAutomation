@@ -5,10 +5,16 @@ const fs = require('fs');
 const app = new Koa();
 const router = new Router();
 
+/**
+ * Used for routing
+ */
 app.use(bodyParser())
     .use(router.allowedMethods())
     .use(router.routes());
 
+/**
+ * Testing hello world on the frontpage localhost:8080
+ */
 app.use(async ctx => {
     ctx.body = "Hello World!";
 });
@@ -53,6 +59,9 @@ function isIdentifierInList(identifier) {
     return false;
 }
 
+/**
+ * Let the server listen on port 8080.
+ */
 app.listen("8080", () => {
     console.log("Server running on port 8080");
 });
