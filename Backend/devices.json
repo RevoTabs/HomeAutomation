@@ -1,0 +1,17 @@
+{
+  "devices":
+  [
+    {
+      "identifier" : "bathroom-lamp",
+      "name": "Bathroom Lamp",
+      "device_type": "switch",
+      "gateway_address": "192.1.0.21"
+    },
+    {
+      "identifier" : "samsung-tv",
+      "name": "Samsung TV",
+      "device_type": "tv",
+      "gateway_address": "192.167.2.0"
+    }
+  ]
+}
