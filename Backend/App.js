@@ -25,6 +25,7 @@ app.use(async ctx => {
 router.get("/devices", ctx => {
     ctx.response.body = JSON.parse(fs.readFileSync('devices.json','utf8'));
     ctx.response.status = 200;
+    console.log("Performed GET request on /devices\n");
 });
 
 /**
@@ -39,19 +40,22 @@ router.post("/devices", ctx => {
         !isEmptyOrBlank(ctx.request.body.device_type) &&
         !isEmptyOrBlank(ctx.request.body.gateway_address)) {
 
-        console.log("Request is valid");
+        console.log("POST request is valid");
 
         // If the identifier is already given in the list, then return an error
         if(!isIdentifierInList(ctx.request.body.identifier, deviceList)) {
             deviceList.devices.push(ctx.request.body);
             fs.writeFileSync("devices.json", JSON.stringify(deviceList));
             ctx.response.status = 201;
+            console.log("Performed POST request and returned 201\n");
         } else {
             ctx.response.status = 403;
+            console.log("Performed POST request and returned 403\n");
+
         }
 
     } else {
-        console.log("Request is invalid");
+        console.log("POST request is invalid\n");
         ctx.throw(400, "One of the parameters are not set");
     }
 });
@@ -64,11 +68,9 @@ router.post("/devices", ctx => {
 function isIdentifierInList(identifier, deviceList) {
     for (let device in deviceList.devices) {
         if(identifier === deviceList.devices[device].identifier) {
-            console.log("Identifier exists in list")
             return true;
         }
     }
-    console.log("Identifier does not exist in list")
     return false;
 }
 
