@@ -16,7 +16,7 @@ app.use(bodyParser())
  * Testing hello world on the front page localhost:8080
  */
 app.use(async ctx => {
-    ctx.body = "Hello World!";
+    ctx.body = "Hello World";
 });
 
 /**
@@ -28,6 +28,11 @@ router.get("/devices", ctx => {
     console.log("Performed GET request on /devices\n");
 });
 
+router.get("/device/:identifier", ctx => {
+    ctx.body = ctx.params.identifier;
+
+})
+
 /**
  * Reads 'devices.json', adds the request body and writes it back to 'devices.json'
  */
@@ -35,10 +40,7 @@ router.post("/devices", ctx => {
     let deviceList = JSON.parse(fs.readFileSync('devices.json','utf8'));
 
     // Error handling by incoming data
-    if(!isEmptyOrBlank(ctx.request.body.identifier) &&
-        !isEmptyOrBlank(ctx.request.body.name) &&
-        !isEmptyOrBlank(ctx.request.body.device_type) &&
-        !isEmptyOrBlank(ctx.request.body.gateway_address)) {
+    if(allValuesAreValid(ctx.request.body)) {
 
         console.log("POST request is valid");
 
@@ -56,23 +58,9 @@ router.post("/devices", ctx => {
 
     } else {
         console.log("POST request is invalid\n");
-        ctx.throw(400, "One of the parameters are not set");
+        ctx.throw(400, "One of the parameters is not set");
     }
 });
-
-/**
- * Checks if a given identifier is present in the json file.
- * @param identifier that is checked if it's in the file.
- * @returns {boolean} if identifier is in the file or not
- */
-function isIdentifierInList(identifier, deviceList) {
-    for (let device in deviceList.devices) {
-        if(identifier === deviceList.devices[device].identifier) {
-            return true;
-        }
-    }
-    return false;
-}
 
 /**
  * Let the server listen on port 8080.
@@ -115,9 +103,31 @@ function isEmptyOrBlank(str) {
     return (!str || str.length === 0 || /^\s*$/.test(str));
 }
 
-// {
-//     "identifier": "kitchen-lamp",
-//     "name": "Kitchen Lamp",
-//     "device_type": "switch",
-//     "gateway_address": "192.123.43.1"
-// }
+/**
+ * Checks if the values of an object are neither empty, blank, null or undefined
+ * @param object that is checked
+ * @returns {boolean}
+ */
+
+function allValuesAreValid(object) {
+    for (let property in object) {
+        if(isEmptyOrBlank(object[property])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * Checks if a given identifier is present in the json file.
+ * @param identifier that is checked if it's in the file.
+ * @returns {boolean} if identifier is in the file or not
+ */
+function isIdentifierInList(identifier, deviceList) {
+    for (let device in deviceList.devices) {
+        if(identifier === deviceList.devices[device].identifier) {
+            return true;
+        }
+    }
+    return false;
+}

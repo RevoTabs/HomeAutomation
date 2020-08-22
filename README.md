@@ -20,6 +20,7 @@
 - [Home Automation Reddit](https://www.reddit.com/r/homeautomation/)
 - [27 Home Automation devices](https://medium.com/@mr_moodnode/27-smart-devices-that-have-open-api-11698813b474)
 - [HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_errors)
+- [JavaScript JSON](https://www.w3schools.com/js/js_json_intro.asp)
 
 ## API
 
