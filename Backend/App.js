@@ -13,7 +13,7 @@ app.use(bodyParser())
     .use(router.routes());
 
 /**
- * Testing hello world on the frontpage localhost:8080
+ * Testing hello world on the front page localhost:8080
  */
 app.use(async ctx => {
     ctx.body = "Hello World!";
@@ -22,7 +22,6 @@ app.use(async ctx => {
 /**
  * Returns the data from 'devices.json'
  */
-
 router.get("/devices", ctx => {
     ctx.response.body = JSON.parse(fs.readFileSync('devices.json','utf8'));
     ctx.response.status = 200;
@@ -31,16 +30,29 @@ router.get("/devices", ctx => {
 /**
  * Reads 'devices.json', adds the request body and writes it back to 'devices.json'
  */
-
 router.post("/devices", ctx => {
     let deviceList = JSON.parse(fs.readFileSync('devices.json','utf8'));
 
-    if(!isIdentifierInList(ctx.request.identifier)) {
-        deviceList.push(ctx.request.body);
-        fs.writeFileSync("devices.json", JSON.stringify(deviceList));
-        ctx.response.status = 201;
+    // Error handling by incoming data
+    if(!isEmptyOrBlank(ctx.request.body.identifier) &&
+        !isEmptyOrBlank(ctx.request.body.name) &&
+        !isEmptyOrBlank(ctx.request.body.device_type) &&
+        !isEmptyOrBlank(ctx.request.body.gateway_address)) {
+
+        console.log("Request is valid");
+
+        // If the identifier is already given in the list, then return an error
+        if(!isIdentifierInList(ctx.request.body.identifier, deviceList)) {
+            deviceList.devices.push(ctx.request.body);
+            fs.writeFileSync("devices.json", JSON.stringify(deviceList));
+            ctx.response.status = 201;
+        } else {
+            ctx.response.status = 403;
+        }
+
     } else {
-        ctx.response.status = 410;
+        console.log("Request is invalid");
+        ctx.throw(400, "One of the parameters are not set");
     }
 });
 
@@ -49,13 +61,14 @@ router.post("/devices", ctx => {
  * @param identifier that is checked if it's in the file.
  * @returns {boolean} if identifier is in the file or not
  */
-function isIdentifierInList(identifier) {
-    let deviceList = JSON.parse(fs.readFileSync('devices.json','utf8'));
+function isIdentifierInList(identifier, deviceList) {
     for (let device in deviceList.devices) {
-        if(identifier === device.identifier) {
+        if(identifier === deviceList.devices[device].identifier) {
+            console.log("Identifier exists in list")
             return true;
         }
     }
+    console.log("Identifier does not exist in list")
     return false;
 }
 
@@ -65,3 +78,44 @@ function isIdentifierInList(identifier) {
 app.listen("8080", () => {
     console.log("Server running on port 8080");
 });
+
+/**
+ * Error handling
+ */
+app.on("error", err => {
+    console.log("The server encountered an error: ", err);
+});
+
+/**
+ * Checks if a string is empty, null or undefined
+ * @param str - string to check
+ * @returns {boolean}
+ */
+function isEmpty(str) {
+    return (!str || str.length === 0);
+}
+
+/**
+ * Checks if a string is blank, null or undefined
+ * @param str - string to check
+ * @returns {boolean}
+ */
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
+
+/**
+ * Checks if a string is empty, blank, null or undefined
+ * @param str - string to check
+ * @returns {boolean}
+ */
+function isEmptyOrBlank(str) {
+    return (!str || str.length === 0 || /^\s*$/.test(str));
+}
+
+// {
+//     "identifier": "kitchen-lamp",
+//     "name": "Kitchen Lamp",
+//     "device_type": "switch",
+//     "gateway_address": "192.123.43.1"
+// }

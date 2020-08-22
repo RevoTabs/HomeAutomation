@@ -19,8 +19,8 @@
 ## Useful links
 - [Home Automation Reddit](https://www.reddit.com/r/homeautomation/)
 - [27 Home Automation devices](https://medium.com/@mr_moodnode/27-smart-devices-that-have-open-api-11698813b474)
+- [HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_errors)
 
- 
 ## API
 
 ### Request all registered devices
@@ -59,7 +59,7 @@
 **Response**
 
 - `200 OK` on success
-- `404 NOT FOUND` if there is no device with this identifier
+- `403 FORBIDDEN` if there is no device with this identifier
 
 ```json
 [
@@ -87,7 +87,9 @@
 **Response**
 
 - `201 CREATED` on success
-- `410 ALREADY EXISTING` if the identifier already exists
+- `400 BAD REQUEST` if the body is empty
+- `403 FORBIDDEN` if the identifier already exists
+
 
 ```json
 {
@@ -106,5 +108,5 @@
 
 **Response**
 
-- `202 DELETED` on success
-- `404 NOT FOUND` if there is no device with this identifier
+- `204 NO CONTENT` on success
+- `403 FORBIDDEN` if there is no device with this identifier
