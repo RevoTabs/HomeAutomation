@@ -4,6 +4,9 @@
 # Idea folder
 .idea
 
+# Node binaries
+node_modules
+
 # Log file
 *.log
 
