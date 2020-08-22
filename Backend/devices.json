@@ -1,8 +1,1 @@
-{
-  "devices":
-  [
-    {"identifier":"bathroom-lamp","name":"Bathroom Lamp","device_type":"switch","gateway_address":"192.1.0.21"},
-    {"identifier":"samsung-tv","name":"Samsung TV","device_type":"tv","gateway_address":"192.167.2.0"},
-    {"identifier":"kitchen-lamp","name":"","device_type":"switch","gateway_address":"192.123.43.1"}
-  ]
-}
+{"devices":[{"identifier":"bathroom-lamp","name":"Bathroom Lamp","device_type":"switch","gateway_address":"192.1.0.21"},{"identifier":"samsung-tv","name":"Samsung TV","device_type":"tv","gateway_address":"192.167.2.0"}]}

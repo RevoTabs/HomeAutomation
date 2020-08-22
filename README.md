@@ -63,14 +63,12 @@
 - `403 FORBIDDEN` if there is no device with this identifier
 
 ```json
-[
-  {
-    "identifier" : "samsung-tv",
-    "name": "Samsung TV",
-    "device_type": "tv",
-    "gateway_address": "192.167.2.0" 
-  }
-]
+{
+"identifier" : "samsung-tv",
+"name": "Samsung TV",
+"device_type": "tv",
+"gateway_address": "192.167.2.0" 
+}
 ```
 ### Add a new device
 
