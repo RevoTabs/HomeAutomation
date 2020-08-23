@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+import DeviceDataItem from "./components/DeviceDataItem"
 
 class App extends React.Component{
 
-    retrieveDevice = () => {
-        let identifier = document.getElementById("deviceUserInput").value;
-        fetch("http://localhost:8080/device/"+identifier,{
+    setDevices (state) {
+        this.setState({
+            devices: state.devices
+        });
+    }
+
+    getDevice = (identifier) => {
+        this.fetchDevices().then(() => {
+            return this.getDeviceInState(identifier);
+        });
+    }
+
+    async fetchDevices() {
+        let response = await fetch("http://localhost:8080/devices",{
             method: "GET",
             mode: "cors",
             credentials: "same-origin",
@@ -14,9 +26,36 @@ class App extends React.Component{
                 'Accept':'application/json',
                 "Content-Type": "application-json"
             }
-        }).then(response => response.json()).then(data => {
-            ReactDOM.render(this.forgeIntoTable(data), document.getElementById("devices"));
         });
+        let data = await response.json();
+        this.setState({
+            devices: data.devices
+        });
+    }
+
+    displayDevice = () => {
+        this.fetchDevices().then(() => {
+            console.log(this.state);
+            let identifier = document.getElementById("deviceUserInput").value;
+            let elementToDisplay = this.getDeviceInState(identifier);
+            ReactDOM.render(this.forgeIntoTable(elementToDisplay), document.getElementById("devices"));
+            });
+    }
+
+    displayAllDevices = () => {
+        this.fetchDevices().then(() => {
+            console.log("TBD");
+        });
+    }
+
+
+    getDeviceInState = (identifier) => {
+        for (let entry in this.state.devices) {
+            if(identifier === this.state.devices[entry].identifier) {
+                return this.state.devices[entry];
+            }
+        }
+        return undefined;
     }
 
     forgeIntoTable = (data) => {
@@ -54,7 +93,9 @@ class App extends React.Component{
                 <h1>Hallo Moritzlein</h1>
                 <p>Kleiner Test für dich Pupsi :3</p>
                 <input type="text" id="deviceUserInput" defaultValue="samsung-tv"/>
-                <button id="loadDeviceButton" onClick={this.retrieveDevice}>Load device</button>
+                <button id="loadDeviceButton" onClick={this.displayDevice}>Load device</button>
+                <button id="loadDevicesButton" onClick={this.displayAllDevices}>Load devices</button>
+                <DeviceDataItem data={this.state}></DeviceDataItem>
                 <div id="devices"/>
             </div>
         )
@@ -62,3 +103,4 @@ class App extends React.Component{
 }
 
 export default App;
+
