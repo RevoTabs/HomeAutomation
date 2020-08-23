@@ -1,24 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
-import DeviceDataItem from "./components/DeviceDataItem"
+import DeviceTable from "./components/DeviceTable"
 
-class App extends React.Component{
+class App extends React.Component {
 
-    setDevices (state) {
-        this.setState({
-            devices: state.devices
-        });
-    }
-
+    /**
+     * Gets an specific device in the basis of the passed identifier
+     * @param identifier - used to determine the entry
+     */
     getDevice = (identifier) => {
-        this.fetchDevices().then(() => {
+        this.fetchAllDevices().then(() => {
             return this.getDeviceInState(identifier);
         });
-    }
+    };
 
-    async fetchDevices() {
-        let response = await fetch("http://localhost:8080/devices",{
+    /**
+     * Fetches all devices from the backend and stores it in the state
+     * @returns {Promise<void>}
+     */
+     fetchAllDevices = async () => {
+        const response = await fetch("http://localhost:8080/devices",{
             method: "GET",
             mode: "cors",
             credentials: "same-origin",
@@ -31,24 +33,45 @@ class App extends React.Component{
         this.setState({
             devices: data.devices
         });
-    }
+    };
 
-    displayDevice = () => {
-        this.fetchDevices().then(() => {
-            console.log(this.state);
+    /**
+     * Displays a single device
+     * Gets the identifier from the user input and renders this specific element in a new table
+     * @returns {Promise<void>}
+     */
+    displayDevice = async () => {
+        await this.fetchAllDevices().then(() => {
             let identifier = document.getElementById("deviceUserInput").value;
             let elementToDisplay = this.getDeviceInState(identifier);
-            ReactDOM.render(this.forgeIntoTable(elementToDisplay), document.getElementById("devices"));
-            });
-    }
-
-    displayAllDevices = () => {
-        this.fetchDevices().then(() => {
-            console.log("TBD");
+            let newClass = (
+                <DeviceTable data={elementToDisplay}/>
+            );
+            ReactDOM.render(newClass, document.getElementById("devicesAnchor"));
         });
-    }
+    };
 
+    /**
+     * Displays all devices
+     */
+    displayAllDevices = async () => {
+        await this.fetchAllDevices().then(() => {
+            let devices = (
+                <div id="devices">
+                    {this.state.devices.map((device) => (
+                        <DeviceTable id={device.identifier} data={device}/>
+                    ))}
+                </div>
+            );
+            ReactDOM.render(devices, document.getElementById("devicesAnchor"));
+        });
+    };
 
+    /**
+     * Gets an entry on the basis of the passed identifier
+     * @param identifier - used to determine the entry
+     * @returns {undefined|*}
+     */
     getDeviceInState = (identifier) => {
         for (let entry in this.state.devices) {
             if(identifier === this.state.devices[entry].identifier) {
@@ -56,51 +79,19 @@ class App extends React.Component{
             }
         }
         return undefined;
-    }
-
-    forgeIntoTable = (data) => {
-    return (
-        <table>
-            <thead>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Identifier:</td>
-                <td>{data.identifier}</td>
-            </tr>
-            <tr>
-                <td>Name:</td>
-                <td>{data.name}</td>
-            </tr>
-            <tr>
-                <td>Device type:</td>
-                <td>{data.device_type}</td>
-            </tr>
-            <tr>
-                <td>Gateway address:</td>
-                <td>{data.gateway_address}</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>
-    );
-}
+    };
 
     render() {
         return (
-            <div className="App">
-                <h1>Hallo Moritzlein</h1>
-                <p>Kleiner Test für dich Pupsi :3</p>
+            <div id="App">
+                <h1>Home Automation</h1>
                 <input type="text" id="deviceUserInput" defaultValue="samsung-tv"/>
                 <button id="loadDeviceButton" onClick={this.displayDevice}>Load device</button>
                 <button id="loadDevicesButton" onClick={this.displayAllDevices}>Load devices</button>
-                <DeviceDataItem data={this.state}></DeviceDataItem>
-                <div id="devices"/>
+                <div id="devicesAnchor"/>
             </div>
-        )
-    }
+        );
+    };
 }
 
 export default App;
-

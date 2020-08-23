@@ -1,7 +1,8 @@
 const Koa = require("koa");
-const Router = require("koa-router")
+const Router = require("koa-router");
 const bodyParser = require("koa-bodyparser");
-const cors = require("@koa/cors")
+const cors = require("@koa/cors");
+const pino = require("koa-pino-logger");
 const fs = require('fs');
 const app = new Koa();
 const router = new Router();
@@ -11,11 +12,12 @@ const router = new Router();
  */
 app.use(bodyParser())
     .use(cors())
+    .use(pino())
     .use(router.allowedMethods())
     .use(router.routes());
 
 /**
- * Testing hello world on the front page localhost:8080
+ * Displaying an information that the server is running
  */
 app.use(async ctx => {
     ctx.body = "Server running on port 8080";
@@ -35,7 +37,6 @@ router.get("/devices", ctx => {
  */
 router.get("/device/:identifier", ctx => {
     let device = findInList(ctx.params.identifier, "object");
-
     if(device !== null) {
         ctx.response.body = JSON.stringify(device);
         ctx.response.status = 200;
@@ -51,23 +52,17 @@ router.get("/device/:identifier", ctx => {
  */
 router.post("/devices", ctx => {
     let deviceList = JSON.parse(fs.readFileSync('devices.json','utf8'));
-
     // Error handling by incoming data
     if(allValuesAreValid(ctx.request.body)) {
-        console.log("POST request is valid");
-
         // If the identifier is already given in the list, then return an error
         if(!findInList(ctx.request.body.identifier, "boolean")) {
             deviceList.devices.push(ctx.request.body);
             fs.writeFileSync("devices.json", JSON.stringify(deviceList));
             ctx.response.status = 201;
-            console.log("Performed POST request and returned 201 \n");
         } else {
             ctx.response.status = 403;
-            console.log("Performed POST request and returned 403 \n");
         }
     } else {
-        console.log("POST request is invalid \n");
         ctx.throw(400, "One of the parameters is not set");
     }
 });

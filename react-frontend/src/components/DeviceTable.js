@@ -1,12 +1,12 @@
 import React from "react";
 
-export default class DeviceDataItem extends React.Component{
+export default class DeviceTable extends React.Component {
 
-    forgeIntoTable = (data) => {
+    render() {
+        const { data } = this.props;
         return (
-            <table>
+            <table id={data.identifier}>
                 <thead>
-                <th>Hallo</th>
                 </thead>
                 <tbody>
                 <tr>
@@ -30,12 +30,5 @@ export default class DeviceDataItem extends React.Component{
                 </tfoot>
             </table>
         );
-    }
-
-    render() {
-        let { data } = this.props;
-        return (
-            <p>DEVICE DATA ITEM PLACEHOLDER</p>
-        )
-    }
+    };
 }
