@@ -1,6 +1,7 @@
 const Koa = require("koa");
 const Router = require("koa-router")
 const bodyParser = require("koa-bodyparser");
+const cors = require("@koa/cors")
 const fs = require('fs');
 const app = new Koa();
 const router = new Router();
@@ -9,6 +10,7 @@ const router = new Router();
  * Used for routing
  */
 app.use(bodyParser())
+    .use(cors())
     .use(router.allowedMethods())
     .use(router.routes());
 
@@ -16,7 +18,7 @@ app.use(bodyParser())
  * Testing hello world on the front page localhost:8080
  */
 app.use(async ctx => {
-    ctx.body = "Hello World";
+    ctx.body = "Server running on port 8080";
 });
 
 /**
