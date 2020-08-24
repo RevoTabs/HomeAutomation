@@ -1,11 +1,12 @@
 import React from "react";
+import "../App.css"
 
 export default class DeviceTable extends React.Component {
 
     render() {
         const { data } = this.props;
         return (
-            <table id={data.identifier}>
+            <table id={data.identifier} className="deviceTable">
                 <thead>
                 </thead>
                 <tbody>

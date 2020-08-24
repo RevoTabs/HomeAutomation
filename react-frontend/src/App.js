@@ -83,7 +83,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div id="App">
+            <div id="App" className="App">
                 <h1>Home Automation</h1>
                 <input type="text" id="deviceUserInput" defaultValue="samsung-tv"/>
                 <button id="loadDeviceButton" onClick={this.displayDevice}>Load device</button>

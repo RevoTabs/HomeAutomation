@@ -1,0 +1,99 @@
+/* [ FONTS ] */
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('Layout/fonts/poppins/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Medium;
+    src: url('Layout/fonts/poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Bold;
+    src: url('Layout/fonts/poppins/Poppins-Bold.ttf');
+}
+
+@font-face {
+    font-family: Poppins-SemiBold;
+    src: url('Layout/fonts/poppins/Poppins-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: Ft-Anima-Medium;
+    src: url('Layout/fonts/ft-anima/FtAnimaMedium.otf');
+}
+@font-face {
+    font-family: Ft-Anima-Regular;
+    src: url('Layout/fonts/ft-anima/FtAnimaRegular.otf');
+}
+
+/* [OWN COLOR DEFINITIONS] */
+:root {
+    --color1: #2C3531;
+    --color2: #116466;
+    --color3: #D9B08C;
+    --color4: #FFCB9A;
+    --color5: #D1E8E2;
+    --color5-light: rgba(209, 232, 226, 0.29);
+}
+
+/* [CSS CODE] */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-size: 40px;
+    height: 100%;
+    font-family: Ft-Anima-Regular, sans-serif;
+    color: var(--color5);
+    background: url(Layout/background3.jpg) no-repeat;
+    background-size: cover;
+}
+
+button, table, input {
+
+    font-family: Ft-Anima-Regular, serif;
+    border: 2px solid var(--color4);
+    box-shadow: 2px 2px 5px 1px var(--color3);
+    font-size: 20px;
+
+}
+
+button, input {
+    text-align: center;
+    color: var(--color5);
+    margin: 5px;
+    padding: 2px;
+}
+
+table {
+    font-family: Ft-Anima-Regular, sans-serif;
+    border-radius: 50px 0px 50px;
+    padding: 20px;
+    height: 150px;
+    margin: 10px;
+}
+
+input {
+    width: 200px;
+    border-color: var(--color4);
+    border-top-right-radius: 25px;
+    background-color: var(--color5-light);
+}
+
+button {
+    height: 30px;
+    width: 150px;
+    background-color: unset;
+    border-radius: 25px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+
