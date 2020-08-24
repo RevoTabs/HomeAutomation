@@ -50,7 +50,7 @@ body, html {
     height: 100%;
     font-family: Ft-Anima-Regular, sans-serif;
     color: var(--color5);
-    background: url(Layout/background3.jpg) no-repeat;
+    background: url(Layout/background.jpg) no-repeat;
     background-size: cover;
 }
 
