@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import DeviceTable from "./components/DeviceTable"
+import DeviceRegistrationForm from "./components/DeviceRegistrationForm";
 
 class App extends React.Component {
 
@@ -81,6 +82,10 @@ class App extends React.Component {
         return undefined;
     };
 
+    submitDevice = () => {
+        console.log("Test");
+    };
+
     render() {
         return (
             <div id="App" className="App">
@@ -89,6 +94,7 @@ class App extends React.Component {
                 <button id="loadDeviceButton" className="test" onClick={this.displayDevice}>Load device</button>
                 <button id="loadDevicesButton" onClick={this.displayAllDevices}>Load devices</button>
                 <div id="devicesAnchor"/>
+                <DeviceRegistrationForm submitDevice={this.submitDevice}/>
             </div>
         );
     };

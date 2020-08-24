@@ -43,24 +43,25 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: all .3s;
+    font-family: Ft-Anima-Regular, sans-serif;
 }
 
 body, html {
-    font-size: 40px;
     height: 100%;
-    font-family: Ft-Anima-Regular, sans-serif;
     color: var(--color5);
     background: url(Layout/background.jpg) no-repeat;
     background-size: cover;
 }
 
-button, table, input {
+h1 {
+    font-size: 50px;
+}
 
-    font-family: Ft-Anima-Regular, serif;
+button, table, input {
     border: 2px solid var(--color4);
     box-shadow: 2px 2px 5px 1px var(--color3);
     font-size: 20px;
-    transition: all .3s;
 
 }
 
@@ -72,7 +73,6 @@ button, input {
 }
 
 table {
-    font-family: Ft-Anima-Regular, sans-serif;
     border-radius: 50px 0px 50px;
     padding: 20px;
     height: 150px;
@@ -102,6 +102,14 @@ button:hover {
 button:active {
     box-shadow: -1px -1px 1px;
 }
-
-
-
+.deviceRegHeadline {
+    grid-area: deviceRegHeadline;
+}
+.deviceRegistrationWrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas:
+    "deviceRegistrationFormHeadline deviceRegistrationFormHeadline"
+    "identifierUserInputForm"
+    ;
+}
