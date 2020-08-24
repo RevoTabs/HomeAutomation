@@ -60,6 +60,7 @@ button, table, input {
     border: 2px solid var(--color4);
     box-shadow: 2px 2px 5px 1px var(--color3);
     font-size: 20px;
+    transition: all .3s;
 
 }
 
@@ -83,6 +84,7 @@ input {
     border-color: var(--color4);
     border-top-right-radius: 25px;
     background-color: var(--color5-light);
+    background-image: linear-gradient(to bottom, var(--color5-light), var(--color1));
 }
 
 button {
@@ -90,10 +92,16 @@ button {
     width: 150px;
     background-color: unset;
     border-radius: 25px;
+    cursor: pointer;
 }
 
 button:hover {
-    cursor: pointer;
+    background-color: var(--color5-light);
 }
+
+button:active {
+    box-shadow: -1px -1px 1px;
+}
+
 
 

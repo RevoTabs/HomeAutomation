@@ -86,7 +86,7 @@ class App extends React.Component {
             <div id="App" className="App">
                 <h1>Home Automation</h1>
                 <input type="text" id="deviceUserInput" defaultValue="samsung-tv"/>
-                <button id="loadDeviceButton" onClick={this.displayDevice}>Load device</button>
+                <button id="loadDeviceButton" className="test" onClick={this.displayDevice}>Load device</button>
                 <button id="loadDevicesButton" onClick={this.displayAllDevices}>Load devices</button>
                 <div id="devicesAnchor"/>
             </div>
