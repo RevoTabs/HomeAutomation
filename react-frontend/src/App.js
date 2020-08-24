@@ -89,6 +89,21 @@ class App extends React.Component {
                 <button id="loadDeviceButton" onClick={this.displayDevice}>Load device</button>
                 <button id="loadDevicesButton" onClick={this.displayAllDevices}>Load devices</button>
                 <div id="devicesAnchor"/>
+                <form enctype="application/json" action="http://localhost:8080/devices" method="post"> 
+                <label for="identifier"> Identifier: </label>
+                <input type="text" id="identifier" name="identifier"></input>
+                <br></br>
+                <label for="name"> Gerätename: </label>
+                <input type="text" id="name" name="name"></input>
+                <br></br>
+                <label for="device_type"> Typ: </label>
+                <input type="text" id="device_type" name="device_type"></input>
+                <br></br>
+                <label for="gateway_address"> IP-Adresse: </label>
+                <input type="text" id="gateway_address" name="gateway_address"></input>
+                <br></br>
+                <input type="submit" value="Submit"></input>
+                </form>
             </div>
         );
     };
